@@ -11,8 +11,13 @@ wget -O "$temp_path" $(echo "$prop" | awk 'NR==1{print $1}')
 
 echo "$prop" | tail -n +2 | while read line
 do
-	text=$(""|dmenu -p "Text to be placed at: $line")
-	convert -font helvetica -fill white -pointsize 30 -draw "text $line '$text'" $temp_path $temp_path
+	pos=$(echo $line | awk '{print $1}')
+	size=$(echo $line | awk '{print $2}')
+	color=$(echo $line | awk '{print $3}')
+	font=$(echo $line | awk '{print $4}')
+	text=$("" | dmenu -p "Text to be placed at: '$pos'")
+	
+	convert -font ${font:-helvetica} -fill ${color:-white} -pointsize ${size:-30} -draw "text ${pos:-0,0} '${text:-SAMPLE TEXT}'" $temp_path $temp_path
 done
 
 dragon-drag-and-drop "$temp_path"
