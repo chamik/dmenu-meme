@@ -15,4 +15,4 @@ do
 	convert -font helvetica -fill white -pointsize 30 -draw "text $line '$text'" $temp_path $temp_path
 done
 
-dnd "$temp_path"
+dragon-drag-and-drop "$temp_path"
